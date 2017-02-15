@@ -4,8 +4,16 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-    return 'Hello world!'
+    return app.send_static_file('home.html')
 
 @app.route('/about')
 def about():
-    return 'This is my about page.'
+    return app.send_static_file('about.html')
+
+@app.route('/contact')
+def contact():
+    return app.send_static_file('contact.html')
+
+@app.route('/post/<postnum>')
+def post1():
+    return 'This is post 1!' + postnum
