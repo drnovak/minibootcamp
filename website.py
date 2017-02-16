@@ -32,4 +32,6 @@ def addrecord():
     except:
         connection.rollback()
         message = "Error in insert operation"
-        
+    finally:
+        return render_template('result.html', message = message)
+        connection.close()
