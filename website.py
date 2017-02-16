@@ -10,10 +10,26 @@ print ('Table created successfully')
 
 connection.close()
 
-app.route('/')
+@app.route('/')
 def hello_world():
     return "Hello, world!"
 
 @app.route('/new')
 def new_post():
     return render_template('new.html')
+
+@app.route('/addrecord', methods = ['POST'])
+def addrecord():
+    connection = sqlite3.connect('database.db')
+    cursor = connection.cursor()
+
+    try:
+        title = request.form['title']
+        post = request.form
+        cursor.execute('INSERT INTO posts (title, post) VALUES (?,?)', (title,post))
+        connection.commit()
+        message = 'Record successfuly added'
+    except:
+        connection.rollback()
+        message = "Error in insert operation"
+        
