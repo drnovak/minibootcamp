@@ -1,19 +1,19 @@
-from flask import Flask
-
+from flask import Flask, render_template, request
+import sqlite3
 app = Flask(__name__)
 
-@app.route('/')
-def index():
-    return app.send_static_file('home.html')
+connection = sqlite3.connect('database.db')
+print('Opened database successfully')
 
-@app.route('/about')
-def about():
-    return app.send_static_file('about.html')
+connection.execute('CREATE TABLE IF NOT EXISTS posts (title TEXT, post TEXT)')
+print ('Table created successfully')
 
-@app.route('/contact')
-def contact():
-    return app.send_static_file('contact.html')
+connection.close()
 
-@app.route('/post/<postnum>')
-def post1():
-    return 'This is post 1!' + postnum
+app.route('/')
+def hello_world():
+    return "Hello, world!"
+
+@app.route('/new')
+def new_post():
+    return render_template('new.html')
